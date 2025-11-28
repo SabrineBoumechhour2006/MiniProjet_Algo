@@ -348,16 +348,25 @@ void runAnimation(int n, bool recursiveMethod, const sf::Font &font){
 
     // create disks with pastel palette (soft)
     vector<sf::RectangleShape> disks;
-    vector<int> pegA, pegB, pegC;
-  for (int i=0; i<n; i++) {
-        float w = 160 - i*20;
-        sf::RectangleShape d(sf::Vector2f(w,20));
-        d.setFillColor(sf::Color(50 * i, 255 - 40 * i, 100 + 30 * i));
-        d.setPosition(200-w/2+5, 450-i*22);
-        disks.push_back(d);
-        pegA.push_back(i);
-    }
+    vector<int> pegA, pegB, pegC ;
+    
+    for (int i = 0; i < n; i++) {
+    float w = 160 - i * 20;
+    sf::RectangleShape d(sf::Vector2f(w, 20));
 
+    // Palette style "aurore"
+    sf::Uint8 r = 255 - i * 15;  // du rose/orangé lumineux
+    sf::Uint8 g = 180 + i * 10;  // léger vert/orangé
+    sf::Uint8 b = 200 - i * 20;  // bleu/violet clair
+    if(r > 255) r = 255;
+    if(g > 255) g = 255;
+    if(b > 255) b = 255;
+    d.setFillColor(sf::Color(r, g, b));
+
+    d.setPosition(200 - w / 2 + 5, 450 - i * 22);
+    disks.push_back(d);
+    pegA.push_back(i);
+}
     moves.clear();
     if (recursiveMethod) hanoiRec(n,'A','C','B'); else hanoiIter(n,'A','C','B');
 
