@@ -55,7 +55,6 @@ void hanoi_iterative(int n, char A, char C, char B) {
         }
     }
 }
-
 int main() {
     while (true) {
         int n, choice;
@@ -72,31 +71,37 @@ int main() {
 
         moves.clear();  // Vider le vecteur pour chaque test
 
-        // 1. Mesurer le temps de calcul de la solution (générer les mouvements)
+        // --- START TOTAL TIMER ---
+        auto start_total = chrono::high_resolution_clock::now();
+
+        // 1. Timer pour le calcul de la solution (génération des mouvements)
         auto start_calc = chrono::high_resolution_clock::now();
         if (choice == 1) hanoi_recursive(n, 'A', 'C', 'B');
         else hanoi_iterative(n, 'A', 'C', 'B');
         auto end_calc = chrono::high_resolution_clock::now();
         double time_calc = chrono::duration<double>(end_calc - start_calc).count();
 
-        // 2. Mesurer le temps pour arriver à la solution finale (simuler l'exécution)
-        long long execution_count = 0;  // Compteur pour simuler l'exécution
+        // 2. Timer pour simuler l’exécution (parcourir les mouvements)
+        long long execution_count = 0;
         auto start_exec = chrono::high_resolution_clock::now();
         for (auto &m : moves) {
-            execution_count++;  // Simuler chaque mouvement (incrémenter un compteur)
-            // Ici, tu peux ajouter plus de logique si tu veux (e.g., afficher ou calculer)
+            execution_count++;
         }
         auto end_exec = chrono::high_resolution_clock::now();
         double time_exec = chrono::duration<double>(end_exec - start_exec).count();
 
-        // Afficher les résultats
+        // --- END TOTAL TIMER ---
+        auto end_total = chrono::high_resolution_clock::now();
+        double time_total = chrono::duration<double>(end_total - start_total).count();
+
+        // Affichage des résultats
         cout << "\n------ RESULTS ------\n";
         cout << "Method: " << (choice == 1 ? "Recursive" : "Iterative") << endl;
         cout << "Disks: " << n << endl;
         cout << "Total moves: " << moves.size() << endl;
         cout << "Time to calculate solution: " << time_calc << " seconds\n";
         cout << "Time to reach final solution: " << time_exec << " seconds\n";
-        cout << "Total time: " << (time_calc + time_exec) << " seconds\n";
+        cout << "Total time from start to finish: " << time_total << " seconds\n";
         cout << "---------------------\n";
 
         char again;
